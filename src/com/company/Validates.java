@@ -84,8 +84,11 @@ public class Validates {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(lekerdezes);
+            conn.close();
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
+        }finally{
+
         }
     }
 }

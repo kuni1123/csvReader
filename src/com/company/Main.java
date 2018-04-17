@@ -41,22 +41,23 @@ public class Main {
                     for (int i = 0;i<tagoltSor.length;i++){
                         fejlec.add(tagoltSor[i]);
                     }
+                    sorSzam++;
                 }
                 else {
                     String[] tagoltSor = sor.split(elvalaszto);
 
-                    if(tagoltSor[0].equals(" ")){hiba += "Nincs LineNumber"; }
-                    if(tagoltSor[1].equals(" ")){hiba += "Nincs OrderItemId"; }
-                    if(tagoltSor[2].equals(" ")){hiba += "Nincs OrderId"; }
-                    if(tagoltSor[3].equals(" ")){hiba += "Nincs megadva a vevő neve"; }
-                    if(tagoltSor[4].equals(" ") || !reg.validateEmail(tagoltSor[4])){hiba += "Nincs megadva vagy rossz a vevő Email címe"; }
-                    if(tagoltSor[5].equals(" ")){hiba += "Nincs megadva a vevő címe"; }
-                    if(tagoltSor[6].equals(" ") || !reg.intValidate(tagoltSor[6])){hiba += "Nincs megadva a vevő irányítószáma"; }
-                    if(tagoltSor[7].equals(" ") || !reg.salePriceValidate(tagoltSor[7])){hiba += "Üres az eladási ára"; }
-                    if(tagoltSor[8].equals(" ") || !reg.shippingPriceValidate(tagoltSor[8])){hiba += "Üres a szállítási költség"; }
-                    if(tagoltSor[9].equals(" ")){hiba += "Üres az SKU mező"; }
-                    if(tagoltSor[10].equals(" ") || reg.statusValidate(tagoltSor[10])){ hiba += "Nincs megadva státusz"; }
-                    if(!tagoltSor[11].equals(" ")){if(!reg.dateValidate(tagoltSor[11])){hiba+="A Dátum formátuma nem jó!";}}
+                    if(tagoltSor[0].equals(" ")){hiba += "Nincs LineNumber "; }
+                    if(tagoltSor[1].equals(" ") || !reg.intValidate(tagoltSor[1])){hiba += "Nincs OrderItemId "; }
+                    if(tagoltSor[2].equals(" ") || !reg.intValidate(tagoltSor[2])){hiba += "Nincs OrderId "; }
+                    if(tagoltSor[3].equals(" ") || !tagoltSor[3].matches("[\\pL]+")){hiba += "Nincs megadva a vevő neve "; }
+                    if(tagoltSor[4].equals(" ") || !reg.validateEmail(tagoltSor[4])){hiba += "Nincs megadva vagy rossz a vevő Email címe "; }
+                    if(tagoltSor[5].equals(" ")){hiba += "Nincs megadva a vevő címe "; }
+                    if(tagoltSor[6].equals(" ") || !reg.intValidate(tagoltSor[6]) || tagoltSor[6].length()!=4 ){hiba += "Érvénytelen a vevő irányítószáma "; }
+                    if(tagoltSor[7].equals(" ") || !reg.salePriceValidate(tagoltSor[7])){hiba += "Üres az eladási ára "; }
+                    if(tagoltSor[8].equals(" ") || !reg.shippingPriceValidate(tagoltSor[8])){hiba += "Üres a szállítási költség "; }
+                    if(tagoltSor[9].equals(" ")){hiba += "Üres az SKU mező "; }
+                    if(tagoltSor[10].equals(" ") || reg.statusValidate(tagoltSor[10])){ hiba += "Nincs megadva státusz "; }
+                    if(!tagoltSor[11].equals(" ")){if(!reg.dateValidate(tagoltSor[11])){hiba+="A Dátum formátuma nem jó! ";}}
                     if(hiba==""){
                         adat.add(tagoltSor);
                         struct.LineNumber = tagoltSor[0];
@@ -65,8 +66,6 @@ public class Main {
                         int osszeg = Integer.parseInt(tagoltSor[7])+Integer.parseInt(tagoltSor[8]);
                         String lekerdezesOrder = "INSERT INTO `buzz`.`order` (`OrderId`, `BuyerName`, `BuyerEmail`, `OrderDate`, `OrderTotalValue`, `Adress`, `Postcode`) VALUES ('"+tagoltSor[2]+"', '"+tagoltSor[3]+"', '"+tagoltSor[4]+"', '"+ reg.getCurrentTimeStamp()+"', '"+osszeg+"', '"+tagoltSor[5]+"', '"+tagoltSor[6]+"');";
                         String lekerdezesOrderItem = "INSERT INTO `buzz`.`order_item` (`OrderItemId`, `OrderId`, `SalePrice`, `ShippingPrice`, `TotalItemPrice`, `SKU`, `Status`) VALUES ('"+tagoltSor[1]+"', '"+tagoltSor[2]+"', '"+tagoltSor[7]+"', '"+tagoltSor[8]+"', '"+osszeg+"', '"+tagoltSor[9]+"', '"+tagoltSor[10]+"');";
-                        System.out.println(lekerdezesOrder);
-                        System.out.println(lekerdezesOrderItem);
                         reg.sqlLekerdezes(lekerdezesOrder);
                         reg.sqlLekerdezes(lekerdezesOrderItem);
 
@@ -74,12 +73,11 @@ public class Main {
                         struct.LineNumber = tagoltSor[0];
                         struct.Message = hiba;
                         struct.Status = "ERROR";
-                        //System.out.println(tagoltSor[0]+" LineNumberrel rendelkezős sornál feltárt hibák:\n"+hiba);
-                        hiba="";
+
                     }
                     responseFile.add(struct);
+                    hiba="";
                 }
-                sorSzam++;
             }
             br.close();
         } catch (Exception e) {

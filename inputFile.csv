@@ -1,4 +1,5 @@
 LineNumber;OrderItemId;OrderId;BuyerName;BuyerEmail;Address;Postcode;SalePrice;ShippingPrice;SKU;Status;OrderDate
 1;23;1;Dávid;kuniasd41@gmail.com;Mohács, Ete János utca 7/b;7700;2000;2200;12345-WHT-XL;IN_STOCK;2018-01-01
-1;12;2;Dávid;kuniasd41@gmail.com;Mohács, Ete János utca 7/b;7700;2000;2200;12345-WHT-XL;IN_STOCK;2018-01-01
+2;12;2;Dávid;kuniasd41@gmail.com;Mohács, Ete János utca 7/b;7700;2000;2200;12345-WHT-XL;IN_STOCK;2018-01-01
 3; ;4; ;kuniasd41gmail.com; ;7676; ; ; ;OUT_OF_STOCK; 
+4;Szia;Sz�veg;123;kuniasd41@gmail.com;123;121;3000;4000;123123-WG;IN_STOCK; 
