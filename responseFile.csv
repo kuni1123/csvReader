@@ -1,0 +1,5 @@
+LineNumber;Status;Message
+1;OK;
+2;OK;
+3;ERROR;Nincs OrderItemId Nincs megadva a vevő neve Nincs megadva vagy rossz a vevő Email címe Nincs megadva a vevő címe Üres az eladási ára Üres a szállítási költség Üres az SKU mező 
+4;ERROR;Nincs OrderItemId Nincs OrderId Nincs megadva a vevő neve Érvénytelen a vevő irányítószáma 

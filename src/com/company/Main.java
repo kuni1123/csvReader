@@ -20,6 +20,7 @@ public class Main {
         String sql = "";
         String hiba = "";
         int sorSzam = 0;
+        String datum = "";
 
 
         List<String> fejlec = new ArrayList<String>();
@@ -57,14 +58,14 @@ public class Main {
                     if(tagoltSor[8].equals(" ") || !reg.shippingPriceValidate(tagoltSor[8])){hiba += "Üres a szállítási költség "; }
                     if(tagoltSor[9].equals(" ")){hiba += "Üres az SKU mező "; }
                     if(tagoltSor[10].equals(" ") || reg.statusValidate(tagoltSor[10])){ hiba += "Nincs megadva státusz "; }
-                    if(!tagoltSor[11].equals(" ")){if(!reg.dateValidate(tagoltSor[11])){hiba+="A Dátum formátuma nem jó! ";}}
+                    if(!tagoltSor[11].equals(" ")){if(!reg.dateValidate(tagoltSor[11])){hiba+="A Dátum formátuma nem jó! ";}else{datum = tagoltSor[11];}}else{datum = reg.getCurrentTimeStamp();}
                     if(hiba==""){
                         adat.add(tagoltSor);
                         struct.LineNumber = tagoltSor[0];
                         struct.Message = "";
                         struct.Status = "OK";
                         int osszeg = Integer.parseInt(tagoltSor[7])+Integer.parseInt(tagoltSor[8]);
-                        String lekerdezesOrder = "INSERT INTO `buzz`.`order` (`OrderId`, `BuyerName`, `BuyerEmail`, `OrderDate`, `OrderTotalValue`, `Adress`, `Postcode`) VALUES ('"+tagoltSor[2]+"', '"+tagoltSor[3]+"', '"+tagoltSor[4]+"', '"+ reg.getCurrentTimeStamp()+"', '"+osszeg+"', '"+tagoltSor[5]+"', '"+tagoltSor[6]+"');";
+                        String lekerdezesOrder = "INSERT INTO `buzz`.`order` (`OrderId`, `BuyerName`, `BuyerEmail`, `OrderDate`, `OrderTotalValue`, `Adress`, `Postcode`) VALUES ('"+tagoltSor[2]+"', '"+tagoltSor[3]+"', '"+tagoltSor[4]+"', '"+ datum +"', '"+osszeg+"', '"+tagoltSor[5]+"', '"+tagoltSor[6]+"');";
                         String lekerdezesOrderItem = "INSERT INTO `buzz`.`order_item` (`OrderItemId`, `OrderId`, `SalePrice`, `ShippingPrice`, `TotalItemPrice`, `SKU`, `Status`) VALUES ('"+tagoltSor[1]+"', '"+tagoltSor[2]+"', '"+tagoltSor[7]+"', '"+tagoltSor[8]+"', '"+osszeg+"', '"+tagoltSor[9]+"', '"+tagoltSor[10]+"');";
                         reg.sqlLekerdezes(lekerdezesOrder);
                         reg.sqlLekerdezes(lekerdezesOrderItem);
